@@ -1,0 +1,27 @@
+F -> T id ( A ) { B } | EPSILON
+A -> Param NextParam | EPSILON
+Param -> T id
+T -> id | BaseT
+BaseT -> int | double
+NextParam -> , Param NextParam | EPSILON
+B -> Stmt B | Attrib | EPSILON
+Attrib -> AssignAttrib NextAttrib
+AssignAttrib -> = Exp | EPSILON
+NextAttrib -> , id Attrib | ;
+Stmt -> Exp ;
+Exp -> Term ExprSign  | null
+Term -> intConst | doubleConst | Var | ( Exp ) 
+ExprSign -> ArithmOp Term ExprSign  | EPSILON
+Var -> id FunctionExt
+FunctionExt -> ( FuncVals )  | id | EPSILON 
+FuncVals -> Exp NextValue | EPSILON 
+NextValue -> , Exp NextValue | EPSILON 
+ArithmOp -> + | - | * | / | =
+Stmt -> IfElseBlock | WhileBlock | ReturnBlock | VarDeclare
+IfElseBlock -> if ( Bool ) Stmt else Stmt
+WhileBlock -> while ( Bool ) Stmt
+ReturnBlock -> return Exp ;
+VarDeclare -> BaseT id = Exp ; 
+Bool -> true | false | Exp RelOp Exp
+RelOp -> > | < | == | !=
+
